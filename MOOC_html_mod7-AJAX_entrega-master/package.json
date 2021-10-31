@@ -8,5 +8,9 @@
         "serverUrl": "https://autocorector.dit.upm.es/",
         "courseId": "1",
         "assignmentId": "4"
+    },
+    "dependencies": {
+        "dotenv": "^10.0.0",
+        "mongoose": "^6.0.12"
     }
 }
