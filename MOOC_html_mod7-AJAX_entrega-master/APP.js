@@ -25,11 +25,29 @@ const postAPI = async (peliculas) => {
 }
 const getAPI = async () => {
     // Completar: Llamar a la API para leer la información guardada en myjson a través de la API
+    try{
+        const res = await fetch(localStorage.URL);
+        return res.json();
+    } catch(err){
+        alert("No se ha podido leer la informacion de la API");
+    }
 
    
 }
 const updateAPI = async (peliculas) => {
     // Completar: Actualizar la información a través de la API
+    try{
+        await fetch(localStorage.URL, {
+            method: 'PUT',
+            headers:{
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(peliculas)
+        });
+
+    } catch(err){
+        alert("A ocurrido un error.")
+    }
 }
 
 
@@ -99,8 +117,7 @@ const showView = (pelicula) => {
 
     return `
         <p>
-      
-      
+        La pelicula <b> ${pelicula.titulo} </b> fue dirigida por <b> ${pelicula.director} </b>.
         </p>
         <div class="actions">
             <button class="index">Volver</button>
@@ -112,8 +129,24 @@ const newView = () => {
     // ...
 
     return `<h2>Crear Película</h2>
+        <div class="field">
+            Titulo <br>
+            <input type="text" id="titulo" placeholder="Titulo">
+        </div>
+        
+        <div class="field">
+            Director <br>
+            <input type="text" id="director" placeholder="Director">
+        </div>
+        
+        <div class="field">    
+            Miniatura <br>
+            <input type="text" id="miniatura" placeholder="URL de la miniatura" value">
+        </div>
+
         <div class="actions">
-            <button class="index">Volver</button>
+            <button class="añadir_pelicula"> Añadir </button>
+            <button class="index"> Volver </button>
         </div>`;
 }
 
@@ -134,14 +167,24 @@ const indexContr = async () => {
 
 const showContr = (i) => {
     // Completar: controlador que muestra la vista showView()
+    document.getElementById('main').innerHTML = showView(mis_peliculas[i]);
 }
 
 const newContr = () => {
     // Completar: controlador que muestra la vista newView()
+    document.getElementById('main').innerHTML = newView();
 }
 
 const createContr = async () => {
     // Completar: controlador que crea una película nueva en el modelo guardado en myjson
+    var nueva_pelicula = {
+        titulo: document.getElementById("titulo").value,
+        director: document.getElementById("director").value,
+        miniatura: document.getElementById("miniatura").value};
+    
+    mis_peliculas.push(nueva_pelicula);
+    await updateAPI(mis_peliculas);
+    indexContr();
 }
 
 const editContr = (i) => {
@@ -159,10 +202,21 @@ const updateContr = async (i) => {
 const deleteContr = async (i) => {
     // Completar:  controlador que actualiza el modelo borrando la película seleccionada
     // Genera diálogo de confirmación: botón Aceptar devuelve true, Cancel false
+    var spam = confirm(`¿Esta seguro de que desea borrar ${mis_peliculas[i].titulo}?`);
+    if (spam == true){
+        mis_peliculas.splice(i, 1); //Elimina la pelicula i del array/lista.
+        await updateAPI(mis_peliculas);
+        await indexContr();
+    } else{
+        await indexContr();
+    }
 }
 
 const resetContr = async () => {
     // Completar:  controlador que reinicia el modelo guardado en myjson con las películas originales
+    mis_peliculas = [...mis_peliculas_iniciales];
+    await updateAPI(mis_peliculas);
+    await indexContr();
 }
 
 // ROUTER de eventos
@@ -173,6 +227,11 @@ document.addEventListener('click', ev => {
     if      (matchEvent(ev, '.index'))  indexContr  ();
     else if (matchEvent(ev, '.edit'))   editContr   (myId(ev));
     else if (matchEvent(ev, '.update')) updateContr (myId(ev));
+    else if (matchEvent(ev, '.show')) showContr (myId(ev));
+    else if (matchEvent(ev, '.delete')) deleteContr (myId(ev));
+    else if (matchEvent(ev, '.Añadir')) newContr ();
+    else if (matchEvent(ev, '.añadir_pelicula')) createContr (myId(ev));
+    else if (matchEvent(ev, '.Reset')) resetContr ();
 })
  
  
