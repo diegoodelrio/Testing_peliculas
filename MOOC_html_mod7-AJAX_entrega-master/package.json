@@ -3,7 +3,7 @@
     "author": "ging-moocs",
     "license": "GNU",
     "version": "0.0.0",
-    "scripts": {  
+    "scripts": {
         "dev": "webpack-dev-server --open",
         "start": "node app.js"
     },
