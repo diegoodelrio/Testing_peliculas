@@ -1,15 +1,11 @@
 {
-    "name": "MOOC_html_mod7-AJAX_entrega",
+    "name": "MOOC_html_mod7-AJAX_entrega-master",
     "author": "ging-moocs",
     "license": "GNU",
     "version": "0.0.0",
-    "scripts": {
-        "server:dev": "nodemon app.js --ignore frontend",
+    "scripts": {  
         "dev": "webpack-dev-server --open",
         "start": "node app.js"
-    },
-    "engines": {
-        "node": "^12.21.0"
     },
     "info": {
         "githubURL": "ging-moocs/MOOC_html_mod7-AJAX_entrega",
