@@ -86,29 +86,26 @@ const indexView = (peliculas) => {
 
 const editView = (i, pelicula) => {
     return `<h2>Editar Película </h2>
-        <div class="field">
+    <div class="field">
         Título <br>
-        <input  type="text" id="titulo" placeholder="Título" 
-                value="${pelicula.titulo}">
-        </div>
-        <div class="field">
+        <input  type="text" id="titulo" placeholder="Título" value="${pelicula.titulo}">
+    </div>
+    <div class="field">
         Director <br>
-        <input  type="text" id="director" placeholder="Director" 
-                value="${pelicula.director}">
-        </div>
-        <div class="field">
+        <input  type="text" id="director" placeholder="Director" value="${pelicula.director}">
+    </div>
+    <div class="field">
         Miniatura <br>
-        <input  type="text" id="miniatura" placeholder="URL de la miniatura" 
-                value="${pelicula.miniatura}">
-        </div>
-        <div class="actions">
-            <button class="update" data-my-id="${i}">
-                Actualizar
-            </button>
-            <button class="index">
-                Volver
-            </button>
-        `;
+        <input  type="text" id="miniatura" placeholder="URL de la miniatura" value="${pelicula.miniatura}">
+    </div>
+    <div class="actions">
+        <button class="update" data-my-id="${i}">
+            Actualizar
+        </button>
+        <button class="index">
+            Volver
+        </button>
+    `;
 }
 
 const showView = (pelicula) => {
